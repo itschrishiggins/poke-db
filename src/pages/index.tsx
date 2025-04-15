@@ -129,7 +129,7 @@ export default function HomePage() {
           className={
             darkMode
               ? "dark bg-gray-900 text-white min-h-screen"
-              : "bg-white text-black min-h-screen"
+              : "bg-[#f7f8fc] text-black min-h-screen"
           }
         >
           <NavBar

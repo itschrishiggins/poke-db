@@ -39,7 +39,7 @@ export default function PokemonDetailsComponent({
                 className={`text-center p-2 rounded-md ${
                   darkMode
                     ? "bg-gray-700 text-gray-200"
-                    : "bg-gray-100 text-gray-800"
+                    : "bg-gray-200 text-gray-800"
                 }`}
               >
                 {pokemon.flavor_text}
@@ -56,7 +56,7 @@ export default function PokemonDetailsComponent({
                   className={`text-center p-2 rounded-md ${
                     darkMode
                       ? "bg-gray-700 text-gray-200"
-                      : "bg-gray-100 text-gray-800"
+                      : "bg-gray-200 text-gray-800"
                   }`}
                 >
                   {(pokemon.height / 10).toFixed(1)}m
@@ -70,7 +70,7 @@ export default function PokemonDetailsComponent({
                   className={`text-center p-2 rounded-md ${
                     darkMode
                       ? "bg-gray-700 text-gray-200"
-                      : "bg-gray-100 text-gray-800"
+                      : "bg-gray-200 text-gray-800"
                   }`}
                 >
                   {(pokemon.weight / 10).toFixed(1)}kg
@@ -176,7 +176,7 @@ export default function PokemonDetailsComponent({
               className={`text-center mt-3 p-2 rounded-md font-medium ${
                 darkMode
                   ? "bg-gray-700 text-gray-200"
-                  : "bg-gray-100 text-gray-800"
+                  : "bg-gray-200 text-gray-800"
               }`}
             >
               Total: {totalStats}
