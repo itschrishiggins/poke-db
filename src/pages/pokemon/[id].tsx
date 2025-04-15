@@ -10,7 +10,7 @@ import Head from "next/head";
 
 export default function PokemonDetailPage() {
   const router = useRouter();
-  const { name } = router.query;
+  const { id } = router.query;
 
   const [pokemon, setPokemon] = useState<PokemonDetailsType | null>(null);
   const [darkMode, setDarkMode] = useState(false);
@@ -28,24 +28,28 @@ export default function PokemonDetailPage() {
   };
 
   useEffect(() => {
-    if (!name || typeof name !== "string") return;
+    if (!id || isNaN(Number(id))) return;
 
     const fetchDetails = async () => {
       try {
         const [pokemonRes, speciesRes] = await Promise.all([
-          fetch(`https://pokeapi.co/api/v2/pokemon/${name}`),
-          fetch(`https://pokeapi.co/api/v2/pokemon-species/${name}`),
+          fetch(`https://pokeapi.co/api/v2/pokemon/${id}`),
+          fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`),
         ]);
+
+        if (!pokemonRes.ok || !speciesRes.ok) {
+          throw new Error("Failed to fetch Pokémon data");
+        }
 
         const pokemonData = await pokemonRes.json();
         const speciesData = await speciesRes.json();
 
-        const genus = speciesData.genera.find(
+        const genus = speciesData?.genera?.find(
           (entry: { language: { name: string }; genus: string }) =>
             entry.language.name === "en"
         )?.genus;
 
-        const flavor = speciesData.flavor_text_entries.find(
+        const flavor = speciesData?.flavor_text_entries?.find(
           (entry: {
             language: { name: string };
             version: { name: string };
@@ -55,14 +59,14 @@ export default function PokemonDetailPage() {
             preferredVersions.includes(entry.version.name)
         )?.flavor_text;
 
-        const nameEn = speciesData.names.find(
+        const nameEn = speciesData?.names?.find(
           (entry: { language: { name: string }; name: string }) =>
             entry.language.name === "en"
         )?.name;
 
         const abilityRes = await fetch(pokemonData.abilities[0].ability.url);
         const abilityData = await abilityRes.json();
-        const abilityFlavor = abilityData.flavor_text_entries.find(
+        const abilityFlavor = abilityData.flavor_text_entries?.find(
           (entry: { language: { name: string }; flavor_text: string }) =>
             entry.language.name === "en"
         )?.flavor_text;
@@ -90,7 +94,7 @@ export default function PokemonDetailPage() {
     };
 
     fetchDetails();
-  }, [name]);
+  }, [id]);
 
   if (!pokemon) return <p className="text-center mt-10">Loading...</p>;
 
@@ -103,8 +107,8 @@ export default function PokemonDetailPage() {
       <div
         className={
           darkMode
-            ? "dark bg-gray-900 text-white min-h-screen"
-            : "bg-[#f7f8fc] text-black min-h-screen"
+            ? "dark bg-gray-900 text-white min-h-screen flex flex-col"
+            : "bg-[#f7f8fc] text-black min-h-screen flex flex-col"
         }
       >
         <ClientNavBar
@@ -113,11 +117,14 @@ export default function PokemonDetailPage() {
           toggleDarkMode={toggleDark}
         />
 
-        <PokemonDetails pokemon={pokemon} darkMode={darkMode} />
+        <div className="flex-1 flex flex-col items-center justify-center">
+          <PokemonDetails pokemon={pokemon} darkMode={darkMode} />
+        </div>
       </div>
     </>
   );
 }
+
 export async function getServerSideProps() {
   return {
     props: {},

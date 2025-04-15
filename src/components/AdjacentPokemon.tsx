@@ -54,7 +54,7 @@ export default function AdjacentPokemon({
       {isPrev && <span className="mr-2">&lt;</span>}
       <img src={data.sprite} alt={data.displayName} className="mx-2" />
       <span className="font-bold">
-        <Link href={`/pokemon/${data.name}`}>
+        <Link href={`/pokemon/${targetId}`}>
           {`#${targetId} ${data.displayName}`}
         </Link>
       </span>

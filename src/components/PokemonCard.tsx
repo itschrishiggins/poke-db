@@ -23,13 +23,13 @@ export default function PokemonCard({ pokemon, darkMode = false }: Props) {
           <div className="text-sm font-medium mt-2">#{idString}</div>
         </div>
         <div className="image-container">
-          <Link href={`/pokemon/${pokemon.rawName}`}>
+          <Link href={`/pokemon/${pokemon.id}`}>
             <img src={pokemon.image} alt={pokemon.name} />
           </Link>
         </div>
         <div className="details-container">
           <div className="text-xl font-bold text-center mb-2">
-            <Link href={`/pokemon/${pokemon.rawName}`}>{pokemon.name}</Link>
+            <Link href={`/pokemon/${pokemon.id}`}>{pokemon.name}</Link>
           </div>
           <div className="flex">
             <div className="types flex flex-row items-center">

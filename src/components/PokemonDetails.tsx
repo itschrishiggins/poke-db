@@ -28,7 +28,7 @@ export default function PokemonDetailsComponent({
 
   return (
     <>
-      <div className="mx-auto max-w-7xl px-6 mt-8 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="mx-auto flex items-center max-w-7xl px-6 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 sm:gap-8">
         {/* Left column */}
         <div className="order-2 md:order-1 flex flex-col justify-between gap-6 mt-12">
           <div className="space-y-6">
@@ -115,7 +115,7 @@ export default function PokemonDetailsComponent({
         </div>
 
         {/* Centre column */}
-        <div className="order-1 md:order-2 flex flex-col items-center justify-center">
+        <div className="order-1 md:order-2 h-screen sm:h-full flex flex-col items-center justify-center">
           <div className="relative flex items-center justify-center aspect-square w-full max-w-sm">
             <div
               className={`absolute inset-0 bg-no-repeat bg-center bg-contain mix-blend-multiply  ${
