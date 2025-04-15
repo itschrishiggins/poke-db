@@ -1,9 +1,7 @@
 "use client";
-export const dynamic = "force-dynamic";
-export const dynamicParams = true;
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useRouter } from "next/router";
 import type { PokemonDetails as PokemonDetailsType } from "@/types/pokemon";
 import ClientNavBar from "@/components/ClientNavBar";
 import PokemonDetails from "@/components/PokemonDetails";
@@ -11,7 +9,9 @@ import { preferredVersions } from "@/utils/constants";
 import Head from "next/head";
 
 export default function PokemonDetailPage() {
-  const { name } = useParams();
+  const router = useRouter();
+  const { name } = router.query;
+
   const [pokemon, setPokemon] = useState<PokemonDetailsType | null>(null);
   const [darkMode, setDarkMode] = useState(false);
 
@@ -44,6 +44,7 @@ export default function PokemonDetailPage() {
           (entry: { language: { name: string }; genus: string }) =>
             entry.language.name === "en"
         )?.genus;
+
         const flavor = speciesData.flavor_text_entries.find(
           (entry: {
             language: { name: string };
@@ -53,6 +54,7 @@ export default function PokemonDetailPage() {
             entry.language.name === "en" &&
             preferredVersions.includes(entry.version.name)
         )?.flavor_text;
+
         const nameEn = speciesData.names.find(
           (entry: { language: { name: string }; name: string }) =>
             entry.language.name === "en"
@@ -115,4 +117,9 @@ export default function PokemonDetailPage() {
       </div>
     </>
   );
+}
+export async function getServerSideProps() {
+  return {
+    props: {},
+  };
 }
