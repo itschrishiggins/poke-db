@@ -65,7 +65,8 @@ export default function AdjacentPokemon({
             className="w-auto object-contain"
           />
         )}
-        <span className="font-bold text-gray-800">{data.displayName}</span>
+        <span className="font-bold">{data.displayName}</span>
+
         <span className="text-sm text-gray-500">#{targetId}</span>
       </div>
 
