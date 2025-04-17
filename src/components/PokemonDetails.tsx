@@ -7,7 +7,7 @@ import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import AdjacentPokemon from "@/components/AdjacentPokemon";
 import { getTypeIconSrc } from "@/utils/helper-functions";
 import { typeStyles } from "@/types/constants";
-import StatsChart from "@/components/BarChart";
+import StatsChart from "@/components/StatsChart";
 import { useDominantColour } from "@/hooks/useDominantColour";
 
 export default function PokemonDetailsComponent({
@@ -186,9 +186,16 @@ export default function PokemonDetailsComponent({
       </div>
 
       {/* Navigation */}
-      <div className="w-full flex justify-center items-center gap-12 pb-6 mt-8">
-        <AdjacentPokemon id={pokemon.id} direction="prev" />
-        <AdjacentPokemon id={pokemon.id} direction="next" />
+      <div className="w-full flex justify-center items-end gap-2 sm:gap-8 flex-nowrap px-2 sm:px-6 pb-6 mt-8 overflow-x-auto">
+        {pokemon.id > 1 && <AdjacentPokemon id={pokemon.id} direction="prev" />}
+
+        {pokemon.id > 1 && pokemon.id < 905 && (
+          <span className="text-gray-400 text-lg font-semibold">|</span>
+        )}
+
+        {pokemon.id < 905 && (
+          <AdjacentPokemon id={pokemon.id} direction="next" />
+        )}
       </div>
     </>
   );

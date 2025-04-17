@@ -7,4 +7,5 @@ export const preferredVersions = [
   "white",
   "sun",
   "moon",
+  "legends-arceus",
 ];

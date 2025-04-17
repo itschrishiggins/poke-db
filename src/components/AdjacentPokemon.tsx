@@ -11,14 +11,14 @@ export default function AdjacentPokemon({
   const [data, setData] = useState<{
     displayName: string;
     name: string;
-    sprite: string;
+    sprite: string | null;
   } | null>(null);
 
   const isPrev = direction === "prev";
   const targetId = isPrev ? id - 1 : id + 1;
 
   useEffect(() => {
-    if ((isPrev && id <= 1) || (!isPrev && id >= 1025)) return;
+    if ((isPrev && id <= 1) || (!isPrev && id >= 905)) return;
 
     (async () => {
       try {
@@ -39,7 +39,8 @@ export default function AdjacentPokemon({
             )?.name ?? pokemon.name,
           name: pokemon.name,
           sprite:
-            pokemon.sprites.versions["generation-viii"].icons.front_default,
+            pokemon.sprites.versions["generation-viii"].icons.front_default ||
+            null,
         });
       } catch {
         setData(null);
@@ -50,15 +51,25 @@ export default function AdjacentPokemon({
   if (!data) return null;
 
   return (
-    <div className="flex items-end justify-center mt-4">
-      {isPrev && <span className="mr-2">&lt;</span>}
-      <img src={data.sprite} alt={data.displayName} className="mx-2" />
-      <span className="font-bold">
-        <Link href={`/pokemon/${targetId}`}>
-          {`#${targetId} ${data.displayName}`}
-        </Link>
-      </span>
-      {!isPrev && <span className="ml-2">&gt;</span>}
-    </div>
+    <Link
+      href={`/pokemon/${targetId}`}
+      className="flex items-end justify-center mt-4 rounded-full transition-all space-x-4"
+    >
+      {isPrev && <span className="text-2xl text-gray-500">‹</span>}
+
+      <div className="flex items-end space-x-3">
+        {data.sprite && (
+          <img
+            src={data.sprite}
+            alt={data.displayName}
+            className="w-auto object-contain"
+          />
+        )}
+        <span className="font-bold text-gray-800">{data.displayName}</span>
+        <span className="text-sm text-gray-500">#{targetId}</span>
+      </div>
+
+      {!isPrev && <span className="text-2xl text-gray-500">›</span>}
+    </Link>
   );
 }

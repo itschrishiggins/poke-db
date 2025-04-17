@@ -88,6 +88,7 @@ export default function PokemonDetailPage() {
         };
 
         setPokemon(result);
+        console.log(result);
       } catch (error) {
         console.error("Error fetching Pokémon:", error);
       }
